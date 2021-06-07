@@ -5,18 +5,20 @@
         <title>{% block title %}Welcome!{% endblock %}</title>
         {# Run `composer require symfony/webpack-encore-bundle`
            and uncomment the following Encore helpers to start using Symfony UX #}
-        <link rel="icon" href="{{ asset('build/pulpfiction.png') }}"/>
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
         {% endblock %}
+
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
         {% endblock %}
+        <link rel="icon" href="{{ asset('build/favicon.png') }}" />
     </head>
+
     <header>
-    {% include "/components/_navbar.html.twig" %}
+        {% include "/components/_navbar.html.twig" %}
     </header>
-    <body>
+    <body class= "bg-secondary" >
         {% block body %}{% endblock %}
     </body>
 </html>
