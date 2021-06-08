@@ -11,3 +11,6 @@ https://www.loom.com/share/1385657482ed455797c4b3548ec27d0b
 
 13/CRUD
 https://www.loom.com/share/3fbc726a81f54de88f3edd1cb9290599
+
+14/Validation
+https://www.loom.com/share/b0ddce55592748288085e62ba6cd4fc7
