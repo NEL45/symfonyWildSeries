@@ -15,13 +15,18 @@ class CategoryFixtures extends Fixture
         'Fantastique',
         'Horreur',
     ];
+
     public function load(ObjectManager $manager)
-    {   
-        foreach (self::CATEGORIES as $key => $categoryName){
-        $category = new Category();
-        $category->setName($categoryName);
-        $manager->persist($category);  
-        }  
+    {
+        foreach (self::CATEGORIES as $key => $categoryName) {
+            $category = new Category();
+            $category->setName($categoryName);
+
+            $manager->persist($category);
+        }
+
         $manager->flush();
+
+
     }
 }

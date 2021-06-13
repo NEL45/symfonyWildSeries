@@ -10,40 +10,39 @@
     <span class="navbar-toggler-icon"></span>
   </button>
 
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+  <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
         <a class="nav-link" href="/">
           Home
         </a>
       </li>
-      <li class="nav-item"><a class="nav-link" href="/programs">Programs</a></li>
+      <li class="nav-item"><a class="nav-link" href="{{ path('program_index') }}">Programs</a></li>
       <li class="nav-item"><a class="nav-link" href="/categories">Categories</a></li>
+      <li class="nav-item"><a class="nav-link" href="{{ path('actor_index') }}">Acteurs</a></li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle"
           href="#"
-          id="navbarDropdown"
+          id="navbarDropdownMenuLink"
           role="button"
-          data-toggle="dropdown"
-          aria-haspopup="true"
+          data-bs-toggle="dropdown"
           aria-expanded="false">
-          Dropdown
+          Listes
         </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Action</a>
-          <a class="dropdown-item" href="#">Another action</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Something else here</a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="{{ path('program_crud') }}">Program</a>
+          <a class="dropdown-item" href="{{ path('season_index') }}">Saisons</a>
+          <a class="dropdown-item" href="{{ path('episode_index') }}">Episodes</a>
         </div>
       </li>
     </ul>
-    <form class="form-inline my-2 my-lg-0">
+    <form class="form-inline my-2 my-lg-0 d-flex">
       <input class="form-control mr-sm-2"
         type="search"
         placeholder="Search"
         aria-label="Search" />
-      <button class="btn btn-outline-success btn-danger my-2 my-sm-0 border-primary" type="submit">
-        Search
+      <button class="btn btn-outline-success btn-danger my-2 mx-2 my-sm-0 border-primary" type="submit">
+        Rechercher
       </button>
     </form>
   </div>

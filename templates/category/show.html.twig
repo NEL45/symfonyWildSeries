@@ -4,7 +4,6 @@
 
 {% block title %}{{category.name}}{% endblock %}
 
-
 {% block body %}
 
 {% for program in programs %}
@@ -19,7 +18,7 @@
 
     <p>Catégorie : {{ program.category.name }}</p>
 
-    <a href="{{ path("program_show", { id: program.id }) }}">Voir la fiche</a>
+    <a href="{{ path("program_show", { id: program.id }) }}">{{ program.title }}</a>
 
   </div>
 

@@ -6,31 +6,39 @@
 
 {% block body %}
 
-    <h1>Toutes les séries de la table program : </h1>
+    <h1>Toutes les séries </h1>
+    <div class="row row-cols-1 row-cols-md-4 g-4">
+        {% for program in programs %}
+            <div class="col">
+                <div class="card h-100">
+                    <img src="{{program.poster}}" class="card-img-top" alt="poster">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ program.title }}</h5>
+                        <p class="card-text">{{ program.summary }}</p>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><strong>Catégorie</strong> : {{ program.category.name }}</li>
+                        <li class="list-group-item"><strong>Acteurs</strong> :
+                            {% for actor in program.actors %}
+                                {{ actor.name }}
+                            {% else %}
+                                Aucun acteur pour cette série
+                            {% endfor %}
+                        </li>
+                    </ul>
+                    <div class="card-footer">
+                        <a href="{{ path("program_show", { id: program.id }) }}" class="card-link">Voir la fiche</a>
+                    </div>
+                </div>
+            </div>
 
-    {% for program in programs %}
+        {% else %}
+            Aucune série trouvée.
+        {% endfor %}
+    </div>
 
-        <div>
-
-            <h2>{{ loop.index }} / {{ program.title }} - Catégorie : {{ program.category.name }}</h2>
-
-            <p>{{ program.summary }}</p>
-
-            <a href="{{ path("program_show", { id: program.id }) }}">Voir la fiche</a>
-
-        </div>
-
-    {% else %}
-
-        Aucune série trouvée.
-
-    {% endfor %}
-
-
-    <a href="{{ path('app_index') }}">
-
-        Retour à l'accueil
-
-    </a>
+        <a href="{{ path('app_index') }}">
+            Retour à l'accueil
+        </a>
 
 {% endblock %}

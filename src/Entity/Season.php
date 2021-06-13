@@ -2,10 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\SeasonRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use DateTimeInterface;
+use App\Entity\Episode;
+use App\Entity\Program;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\SeasonRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass=SeasonRepository::class)
@@ -67,12 +70,12 @@ class Season
         return $this;
     }
 
-    public function getYear(): ?\DateTimeInterface
+    public function getYear(): ?int
     {
         return $this->year;
     }
 
-    public function setYear(\DateTimeInterface $year): self
+    public function setYear(int $year): self
     {
         $this->year = $year;
 

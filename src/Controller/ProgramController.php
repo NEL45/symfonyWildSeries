@@ -1,132 +1,104 @@
 <?php
-// src/Controller/ProgramController.php
 
 namespace App\Controller;
 
 use App\Entity\Program;
+use App\Form\ProgramType;
+use App\Repository\ProgramRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Repository\SeasonRepository;
-use App\Repository\ProgramRepository;
-use App\Entity\Season;
-use App\Entity\Episode;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Component\HttpFoundation\Request;
-use App\Form\ProgramType;
 
 /**
- * @Route("/programs", name="program_")
+ * @Route("/program")
  */
-
 class ProgramController extends AbstractController
 {
-
     /**
-     * @Route("/", name="index")
-     * @return Response A response instance
+     * @Route("/", name="program_index", methods={"GET"})
      */
-
-    public function index(): Response
+    public function index(ProgramRepository $programRepository): Response
     {
-        $programs = $this->getDoctrine()
-            ->getRepository(Program::class)
-            ->findAll();
-
-        return $this->render(
-            'programs/index.html.twig',
-            ['programs' => $programs]
-        );
-    }
-
-/**
- * The controller for the category add form
- *
- * @Route("/new", name="new")
- */
-public function new(Request $request) : Response
-    {
-        // Create a new program Object
-        $program = new Program();
-        // Create the associated Form
-        $form = $this->createForm(ProgramType::class, $program);
-        // Get data from HTTP request
-        $form->handleRequest($request);
-        // Was the form submitted ?
-        if ($form->isSubmitted()) {
-            // Deal with the submitted data
-            // Get the Entity Manager
-            $entityManager = $this->getDoctrine()->getManager();
-            // Persist Category Object
-            $entityManager->persist($program);
-            // Flush the persisted object
-            $entityManager->flush();
-            // Finally redirect to programs list
-            return $this->redirectToRoute('program_index');
-        }
-        // Render the form
-        return $this->render('programs/new.html.twig', ["form" => $form->createView()]);
-    }
-
-/**
- * Getting a program by id
- *
- * @Route("/show/{id<^[0-9]+$>}", name="show")
- * @return Response
- */
-
-    public function show(Program $program, SeasonRepository $seasonRepository): Response
-    {
-        if (!$program) {
-
-            throw $this->createNotFoundException(
-                'No program with id : ' . $program . ' found in program\'s table.'
-            );
-
-        }
-
-        $seasons = $seasonRepository->findAll();
-
-        return $this->render('programs/show.html.twig', [
-            'program' => $program,'seasons' => $seasons
+        return $this->render('programs/index.html.twig', [
+            'programs' => $programRepository->findAll(),
         ]);
     }
 
-
-    /**
-    * @Route("/{program}/seasons/{season}", name="season_show")
-    * @return Response
-    */
-
-    public function showSeason(Program $program, Season $season){
-
-        $episodes = $this->getDoctrine()
-            ->getRepository(Episode::class)
-            ->findAll();
-
-        return $this->render(
-            'programs/season_show.html.twig',
-            ['program' => $program, 'season' => $season, 'episodes' => $episodes]
-        );
-
+        /**
+     * @Route("/crud", name="program_crud", methods={"GET"})
+     */
+    public function crud(ProgramRepository $programRepository): Response
+    {
+        return $this->render('program/index.html.twig', [
+            'programs' => $programRepository->findAll(),
+        ]);
     }
 
     /**
-    * @Route("/{programId}/seasons/{seasonId}/episodes/{episodeId}", name="episode_show")
-    * @ParamConverter("program", class="App\Entity\Program", options={"mapping": {"programId": "id"}})
-    * @ParamConverter("season", class="App\Entity\Season", options={"mapping": {"seasonId": "id"}})
-    * @ParamConverter("episode", class="App\Entity\Episode", options={"mapping": {"episodeId": "id"}})
-    * @return Response
-    */
+     * @Route("/new", name="program_new", methods={"GET","POST"})
+     */
+    public function new(Request $request): Response
+    {
+        $program = new Program();
+        $form = $this->createForm(ProgramType::class, $program);
+        $form->handleRequest($request);
 
-    public function showEpisode(Program $program, Season $season, Episode $episode){
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($program);
+            $entityManager->flush();
 
-        return $this->render(
-            'programs/season_show.html.twig',
-            ['program' => $program, 'season' => $season, 'episodes' => $episode]
-        );
+            return $this->redirectToRoute('program_index');
+        }
 
+        return $this->render('program/new.html.twig', [
+            'program' => $program,
+            'form' => $form->createView(),
+        ]);
     }
 
+    /**
+     * @Route("/{id}", name="program_show", methods={"GET"})
+     */
+    public function show(Program $program): Response
+    {
+        return $this->render('program/show.html.twig', [
+            'program' => $program,
+        ]);
+    }
 
+    /**
+     * @Route("/{id}/edit", name="program_edit", methods={"GET","POST"})
+     */
+    public function edit(Request $request, Program $program): Response
+    {
+        $form = $this->createForm(ProgramType::class, $program);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('program_index');
+        }
+
+        return $this->render('program/edit.html.twig', [
+            'program' => $program,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/{id}", name="program_delete", methods={"POST"})
+     */
+    public function delete(Request $request, Program $program): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$program->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($program);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('program_index');
+    }
 }
