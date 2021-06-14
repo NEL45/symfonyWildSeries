@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-dark bg-light border">
   <a class="navbar-brand" href="#">Wild Series</a>
   <button class="navbar-toggler"
     type="button"
@@ -17,7 +17,7 @@
           Home
         </a>
       </li>
-      <li class="nav-item"><a class="nav-link" href="{{ path('program_index') }}">Programs</a></li>
+      <li class="nav-item"><a class="nav-link" href="{{ path('program_index') }}">Séries</a></li>
       <li class="nav-item"><a class="nav-link" href="/categories">Categories</a></li>
       <li class="nav-item"><a class="nav-link" href="{{ path('actor_index') }}">Acteurs</a></li>
       <li class="nav-item dropdown">
@@ -30,7 +30,7 @@
           Listes
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" href="{{ path('program_crud') }}">Program</a>
+          <a class="dropdown-item" href="{{ path('program_crud') }}">Séries</a>
           <a class="dropdown-item" href="{{ path('season_index') }}">Saisons</a>
           <a class="dropdown-item" href="{{ path('episode_index') }}">Episodes</a>
         </div>
