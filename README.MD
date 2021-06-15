@@ -14,3 +14,6 @@ https://www.loom.com/share/bb2beaefa2fa4932a0fd38e451a2abfd
 
 16/EntityType
 https://www.loom.com/share/c2c90c01965a4ae8933954b4c2b5d4c6
+
+17/Fixtures avancées avec jointures
+https://www.loom.com/share/5b05c8f2c00a41e1b9457cd9ec0c56af
